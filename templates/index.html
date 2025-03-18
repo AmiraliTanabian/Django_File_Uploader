@@ -4,21 +4,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>آپلود فایل - دارک مود مدرن</title>
+    <title>آپلود فایل</title>
+    <link rel="stylesheet" href="{% static "style.css" %}">
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="flex items-center justify-center h-screen bg-gray-900 text-white">
+    {% if messages %}
+        {% for msg in messages %}
+            {% if msg.tags == "success" %}
+                <div class="success-box" id="error-message">
+                        {{ msg }}
+                </div>
+            {% else %}
+                <div class="error-box" id="error-message">
+                    {{ msg }}
+                </div>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
     <div class="bg-gray-800 p-8 rounded-2xl shadow-2xl text-center w-full max-w-md border border-gray-700">
-        <label for="file-upload" class="block px-6 py-3 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-xl cursor-pointer transition hover:shadow-xl flex items-center justify-center gap-2">
-            <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M3 16v2a4 4 0 004 4h10a4 4 0 004-4v-2M16 12l-4-4m0 0l-4 4m4-4v12"></path>
-            </svg>
-            انتخاب فایل
-        </label>
-        <input type="file" id="file-upload" class="hidden">
-        <p class="mt-4 text-gray-400 text-sm italic" id="file-name">هیچ فایلی انتخاب نشده است</p>
-    </div>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <label for="file-upload" class="block px-6 py-3 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-xl cursor-pointer transition hover:shadow-xl flex items-center justify-center gap-2">
+                <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 16v2a4 4 0 004 4h10a4 4 0 004-4v-2M16 12l-4-4m0 0l-4 4m4-4v12"></path>
+                </svg>
+                انتخاب فایل
+            </label>
+            {{ form }}
+            <p class="mt-4 text-gray-400 text-sm italic" id="file-name">هیچ فایلی انتخاب نشده است</p>
 
+            <button id="submit-btn" class="mt-6 px-6 py-3 bg-green-500 text-white rounded-xl transition hover:bg-green-600 hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed" disabled type="submit">
+                آپلود فایل
+            </button>
+        </form>
+    </div>
     <script src="{% static "script.js" %}"></script>
 </body>
 </html>
