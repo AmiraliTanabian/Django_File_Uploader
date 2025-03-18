@@ -32,6 +32,9 @@ python3 manage.py migrate
 ```
 python3 manage.py migrate
 ```
+<li>
+  Create <b>media</b> directory on root path
+</li>
 
 <li>
   Run it on localhost
